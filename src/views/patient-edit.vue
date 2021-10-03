@@ -1,9 +1,9 @@
 <template>
-<div class="container-fluid"><h3>This is an patient create page </h3>
+<div class="container-fluid"><h3>This is an patient Edit page {{patient.name}}</h3>
   <form @submit.prevent="submit" class="row g-3 needs-validation" novalidate>
     <div class="col-md-4">
       <label for="name" class="form-label">Patient Name</label>
-      <input  v-model="state.name" :class="{ 'is-invalid' : v$.name.$error}" type="text" placeholder="Patient Name" class="form-control" id="name">
+      <input  v-model="state.name" :class="{ 'is-invalid' : v$.name.$error}" type="text" class="form-control" id="name">
       <div class="valid-feedback">
         Looks good!
       </div>
@@ -15,7 +15,7 @@
 
     <div class="col-md-1">
       <label for="age" class="form-label">Age</label>
-      <input v-model="state.age" :class="{ 'is-invalid' : v$.age.$error}" type="text" placeholder="Age" class="form-control" id="age">
+      <input v-model="state.age" :class="{ 'is-invalid' : v$.age.$error}" type="text" class="form-control" id="age">
       <div class="invalid-feedback" v-if="v$.age.$error">
           Age is required
       </div>
@@ -47,13 +47,13 @@
 
     <div class="col-md-1">
       <label for="country_code" class="form-label">India</label>
-      <input v-model="state.country_code" type="text" placeholder="Code" class="form-control" id="country_code">
+      <input v-model="state.country_code" type="text" class="form-control" id="country_code">
     </div>
     <div class="col-md-2">
       <label for="mobile_no" class="form-label">Mobile No</label>
       <div class="input-group has-validation">
         <span class="input-group-text" id="inputGroupPrepend">@</span>
-        <input v-model="state.mobile_no" type="text" placeholder="Mobile Number" class="form-control" id="mobile_no" aria-describedby="inputGroupPrepend">
+        <input v-model="state.mobile_no" type="text" class="form-control" id="mobile_no" aria-describedby="inputGroupPrepend">
         
       </div>
     </div>
@@ -61,7 +61,7 @@
     
     <div class="col-md-5">
       <label for="address" class="form-label">Address</label>
-      <textarea v-model="state.address" placeholder="Address" class="form-control" id="address"></textarea>
+      <textarea v-model="state.address" class="form-control" id="address"></textarea>
     </div>
     
     <div class="col-12">
@@ -71,25 +71,22 @@
 </div>
 </template>
 
-
 <script>
-import { reactive } from 'vue'
+import { ref, onMounted, watch } from 'vue'
 import useVuelidate from '@vuelidate/core'
 import { required } from '@vuelidate/validators'
-import { CREATE_PATIENT } from '../store/actions-type';
+import { mapGetters } from 'vuex';
+import { useRoute } from 'vue-router'
+import { useStore } from 'vuex'
+import { EDIT_PATIENT, FETCH_PATIENT } from '../store/actions-type';
 
 export default {
-  name : 'patient-create',
+  name : 'patient-edit',
+  computed: {
+    ...mapGetters(['patient'])
+  },
   setup () {
-    const state = reactive({
-      name: '',
-      age: '',
-      age_in: '',
-      gender: '',
-      conutry_code : '+91',
-      mobile_no : '',
-      address : ''
-    })
+    const state = ref({})
     const rules = {
       name: { required }, // Matches state.firstName
       age: { required }, // Matches state.lastName
@@ -98,6 +95,22 @@ export default {
     }
 
     const v$ = useVuelidate(rules, state)
+
+    const setState = newstate => {
+      state.value = newstate
+    }
+
+    const store = useStore()
+    const route = useRoute()
+    onMounted(() => {
+      console.log('mounted!')
+      store.dispatch(FETCH_PATIENT, route.params.id)
+    })
+
+    watch(() => store.getters['patient'], function() {
+      console.log('value changes detected');
+      setState(store.getters['patient'])
+    });
 
     return { state, v$ }
   },
@@ -109,7 +122,7 @@ export default {
         return
       }
       // console.log(this.$v)
-      this.$store.dispatch(CREATE_PATIENT, {...this.state, app_id:100});
+      this.$store.dispatch(EDIT_PATIENT, {...this.state, app_id:100});
     }
   }
 }

@@ -1,12 +1,12 @@
-import { getPatient } from "../api";
-import { createPatient, getPatientList } from '../api/patient'
-import { CREATE_PATIENT, FETCH_PATIENT, FETCH_PATIENT_LIST, NAVIGATE_PUSH } from "./actions-type";
+import { fetchPatient, createPatient, getPatientList, editPatient, _deletePatient } from '../api/patient'
+import { CREATE_PATIENT, DELETE_PATIENT, EDIT_PATIENT, FETCH_PATIENT, FETCH_PATIENT_LIST, NAVIGATE_PUSH } from "./actions-type";
 import { SET_PATIENT, UNSET_SPINNER, SET_SPINNER, SET_PATIENT_LIST } from "./mutations-type";
+import { lmt } from './ui';
 
 
 const initialState = {
     patient: {
-        "name" : '',
+        "name" : 'ABC',
         "gender" : '',
         "age" : null,
         "age_in" : '',
@@ -16,6 +16,7 @@ const initialState = {
         "app_id" : null
     },
     patientList: {
+      'data' : [],
       'page' : 0,
       'total' : 0
     }
@@ -24,16 +25,12 @@ const initialState = {
 export const state = { ...initialState }
 
 export const actions = {
-    async [FETCH_PATIENT](context, patientSlug, prevPatient) {
-      // avoid extronuous network call if article exists
-      console.log(patientSlug)
-      console.log(prevPatient)
-      //if (prevPatient !== undefined) {
-        //return context.commit(SET_PATIENT, prevArticle);
-      //}
+    async [FETCH_PATIENT](context, id) {
+      console.log('fetching patient details of id:')
+      console.log(id)
       context.commit(SET_SPINNER);
-      const data = await getPatient()
-      context.commit(SET_PATIENT, data.patient);
+      const data = await fetchPatient(id)
+      context.commit(SET_PATIENT, data);
       context.commit(UNSET_SPINNER);
       return data;
     },
@@ -54,7 +51,36 @@ export const actions = {
       try {
         const data = await createPatient(payload)
         context.commit(SET_PATIENT, data);
-        context.dispatch(NAVIGATE_PUSH, '/patient/list/2');
+        context.dispatch(NAVIGATE_PUSH, `/patient/edit/${data.id}`);
+        return data;
+      } catch(e) {
+        console.log(e)
+      }finally {
+        context.commit(UNSET_SPINNER);
+      }
+    },
+    async [EDIT_PATIENT](context, payload) {
+      const { id } = payload
+      delete payload._id
+      context.commit(SET_SPINNER);
+      try {
+        const data = await editPatient(id, payload)
+        context.commit(SET_PATIENT, data);
+        context.dispatch(NAVIGATE_PUSH, `/patient/list/2`);
+        return data;
+      } catch(e) {
+        console.log(e)
+      }finally {
+        context.commit(UNSET_SPINNER);
+      }
+    },
+    async [DELETE_PATIENT](context, payload) {
+      const { id, page } = payload
+      context.commit(SET_SPINNER);
+      try {
+        const data = await _deletePatient(id)
+        console.log(data)
+        context.dispatch(FETCH_PATIENT_LIST, {...lmt, 'page_number' : page} );
         return data;
       } catch(e) {
         console.log(e)

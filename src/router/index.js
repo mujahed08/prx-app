@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import PatientList from '../views/patient-list.vue'
 import PatientCreate from '../views/patient-create.vue'
+import PatientEdit from '../views/patient-edit.vue'
 
 const routes = [
   {
@@ -17,6 +18,10 @@ const routes = [
     path: '/patient/create',
     name: 'patient-create',
     component: PatientCreate
+  },{
+    path: '/patient/edit/:id',
+    name: 'patient-edit',
+    component: PatientEdit
   },
   {
     path: '/about',
