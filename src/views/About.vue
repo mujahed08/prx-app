@@ -19,7 +19,7 @@ export default {
   },
   methods: {
     fetchPatient() {
-      this.$store.dispatch(FETCH_PATIENT, {'name' : 'Mohammed Mujahed Khan'});
+      this.$store.dispatch(FETCH_PATIENT, 13);
     }
   }
 }

@@ -1,18 +1,14 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/patient/list/2">Patient List</router-link> |
-    <router-link to="/about">About</router-link> | 
-    <a href="/price.html">Price</a>
-  </div>
-  <router-view :key="$route.path"/>
+  <Root/>
   <Loader/>
 </template>
 
 <script>
 import Loader from './components/Loader.vue'
+import Root from './views/root.vue'
 export default {
   components : {
+    Root,
     Loader
   }
 }

@@ -1,11 +1,10 @@
 <template>
-    <h1>Patient List:</h1>
-    <div class="d-flex">
+    <div class="d-flex my-2">
         <router-link to="/patient/create" role="button" class="btn btn-success mx-2">Create</router-link>
         <button @click="edit" type="button" class="btn btn-primary mx-2">Edit</button>
         <button @click="_delete" type="button" class="btn btn-danger mx-2">Delete</button>
     </div>
-    <table class="table">
+    <table class="table border">
         <thead>
             <tr>
             <th scope="col"><input v-model="all" @click="select(patientList.data)" type="checkbox" class="form-check-input"></th>

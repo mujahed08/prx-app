@@ -51,7 +51,7 @@ export const actions = {
       try {
         const data = await createPatient(payload)
         context.commit(SET_PATIENT, data);
-        context.dispatch(NAVIGATE_PUSH, `/patient/edit/${data.id}`);
+        context.dispatch(NAVIGATE_PUSH, `/patient/list/1`);
         return data;
       } catch(e) {
         console.log(e)
