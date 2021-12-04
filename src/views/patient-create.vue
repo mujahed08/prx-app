@@ -1,8 +1,10 @@
 <template>
-<div class="m-3 p-3 border font-monospace">
-<div class="container"><h3 class="text-start">Create Patient </h3></div>
+<div class="my-3 font-monospace card">
+  <h3 class="text-start card-header">Patient </h3>
+<div class="card-body">
+<h5 class="text-start card-title">Create Patient </h5>
 <div class="container">
-    <form @submit.prevent="submit" class="row g-5" novalidate>
+    <form @submit.prevent="submit" class="needs-validation row g-5" novalidate>
       <div class="col-lg-6 d-flex flex-column align-items-start">
         <label for="name" class="form-label fw-bold">Patient Name</label>
         <input  v-model="state.name" :class="{ 'is-invalid' : v$.name.$error}" type="text" placeholder="Patient Name" class="form-control" id="name">
@@ -69,6 +71,7 @@
       </div>
     </div>
 </form>
+</div>
 </div>
 </div>
 </template>
