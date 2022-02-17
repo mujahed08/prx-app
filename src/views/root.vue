@@ -10,6 +10,9 @@
             <router-link to="/about" active-class="active fw-bolder" class="nav-link">About</router-link>
         </li>
         <li class="nav-item">
+            <router-link to="/catch/list/1" active-class="active fw-bolder" class="nav-link">Catch</router-link>
+        </li>
+        <li class="nav-item">
             <a href="/price.html" class="nav-link disabled" tabindex="-1" aria-disabled="true">Price</a>
         </li>
     </ul>

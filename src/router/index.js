@@ -3,6 +3,9 @@ import Home from '../views/Home.vue'
 import PatientList from '../views/patient-list.vue'
 import PatientCreate from '../views/patient-create.vue'
 import PatientEdit from '../views/patient-edit.vue'
+import IssueList from '../views/issue-list.vue'
+import IssueCreate from '../views/issue-create.vue'
+import IssueEdit from '../views/issue-edit.vue'
 
 const routes = [
   {
@@ -30,6 +33,19 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
+  },
+  {
+    path: '/catch/list/:page',
+    name: 'issue-list',
+    component: IssueList
+  },{
+    path: '/catch/create',
+    name: 'issue-create',
+    component: IssueCreate
+  },{
+    path: '/catch/edit/:id',
+    name: 'issue-edit',
+    component: IssueEdit
   }
 ]
 

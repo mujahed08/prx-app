@@ -6,19 +6,13 @@
 <div class="container">
     <form @submit.prevent="submit" class="needs-validation row g-5" novalidate>
       <div class="col-lg-6 d-flex flex-column align-items-start">
-        <label for="name" class="form-label fw-bold">Patient Name</label>
-        <input  v-model="state.name" :class="{ 'is-invalid' : v$.name.$error}" type="text" placeholder="Patient Name" class="form-control" id="name">
+        <label for="summary" class="form-label fw-bold">Summary</label>
+        <input  v-model="state.summary" :class="{ 'is-invalid' : v$.name.$error}" type="text" placeholder="Patient Name" class="form-control" id="name">
         <div class="valid-feedback">Looks good!</div>
-        <div class="invalid-feedback text-start" v-if="v$.name.$error">Name is required</div>
+        <div class="invalid-feedback text-start" v-if="v$.summary.$error">Summary is required</div>
       </div>
 
-      <div class="col-lg-3 col-md-4 col-sm-6 d-flex flex-column align-items-start">
-        <label for="age" class="form-label fw-bold">Age</label>
-        <input v-model="state.age" :class="{ 'is-invalid' : v$.age.$error}" type="text" placeholder="Age" class="form-control" id="age">
-        <div class="invalid-feedback text-start" v-if="v$.age.$error">
-            Age is required
-        </div>
-      </div>
+      
     
     <div class="col-lg-3 col-md-4 col-sm-6 d-flex flex-column align-items-start">
       <label for="age_in" class="form-label fw-bold">Age In</label>
@@ -63,6 +57,14 @@
       <label for="address" class="form-label fw-bold">Address</label>
       <textarea v-model="state.address" placeholder="Address" class="form-control" id="address"></textarea>
     </div>
+
+    <div class="col-lg-3 col-md-4 col-sm-6 d-flex flex-column align-items-start">
+        <label for="age" class="form-label fw-bold">Age</label>
+        <input v-model="state.age" :class="{ 'is-invalid' : v$.age.$error}" type="text" placeholder="Age" class="form-control" id="age">
+        <div class="invalid-feedback text-start" v-if="v$.age.$error">
+            Age is required
+        </div>
+      </div>
     
     <div class="col-12">
       <div class="row">
